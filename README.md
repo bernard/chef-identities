@@ -6,6 +6,10 @@ Requirements
 ============
 In order for this cookbook to work properly, you need to install the ruby-shadow gem.
 
-Usage
+User management
+=====
+To come...
+
+Group management
 =====
 To come...
