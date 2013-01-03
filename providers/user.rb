@@ -14,7 +14,6 @@ else
       s = Chef::EncryptedDataBagItem.load_secret(new_resource.secret_file)
       u = Chef::EncryptedDataBagItem.load(new_resource.data_bag, new_resource.name, s)
     end
-    u = data_bag_item(new_resource.data_bag, new_resource.name)
 
     # Create/manage user
     user new_resource.name do
