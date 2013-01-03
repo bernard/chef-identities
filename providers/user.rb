@@ -16,7 +16,9 @@ else
     end
 
     # Create/manage user
-    if u['home_dir']
+    if u['id'] == 'root'
+      h = '/root'
+    elsif u['home_dir']
       h = u['home_dir']
     else
       # Set sensible default
