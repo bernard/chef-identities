@@ -7,13 +7,10 @@ if Chef::Config[:solo]
   Chef::Log.warn("This recipe does not support Chef Solo. It requires search and data bags.")
 else
   action :manage do
-    # Get user profile
-    if new_resource.encrypted_databag == false
-      u = data_bag_item(new_resource.data_bag, new_resource.name)
-    else
-      s = Chef::EncryptedDataBagItem.load_secret(new_resource.secret_file)
-      u = Chef::EncryptedDataBagItem.load(new_resource.data_bag, new_resource.name, s)
-    end
+    # Get user profile and vault
+    u = data_bag_item(new_resource.data_bag, new_resource.name)
+    s = Chef::EncryptedDataBagItem.load_secret(new_resource.secret_file)
+    v = Chef::EncryptedDataBagItem.load(new_resource.vault_data_bag, new_resource.name, s)
 
     # Create/manage user
     if u['id'] == 'root'
@@ -36,12 +33,12 @@ else
       comment u['comment'] if u['comment']
       uid u['uid'] if u['uid']
       gid u['gid'] if u['gid']
-      password u['password'] if u['password']
+      password v['password'] if v['password']
       home h
     end
 
     # Manage SSH authorized keys
-    if u['authorized_keys']
+    if v['authorized_keys']
       directory "#{h}/.ssh" do
         owner u['id']
         mode 0700
@@ -51,7 +48,7 @@ else
         cookbook 'identities'
         source 'authorized_keys.erb'
         owner u['id']
-        variables( :keys => u['authorized_keys'] )
+        variables( :keys => v['authorized_keys'] )
       end
     end
   end

@@ -8,17 +8,13 @@ Requirements
 
 In order for this cookbook to work properly, you need to install the ruby-shadow gem.
 
-Data bag example
-================
+Users data bag example
+======================
 
 	{
-	  "authorized_keys": [
-	    "some SSH key"
-	  ],
 	  "home_dir": "/root",
 	  "shell": "/bin/bash",
 	  "uid": 0,
-	  "password": "some password hash",
 	  "groups": [
 	    "root"
 	  ],
@@ -27,6 +23,18 @@ Data bag example
 	}
 
 If keys are missing, it's not a problem. The provider will just use the user resource's defaults.
+
+# Users vault data bag example
+==============================
+
+        {
+          "authorized_keys": [
+            "some SSH key"
+          ],
+          "password": "some password hash"
+        }
+
+NOTE: Passwords and SSH keys need to be stored in an encrypted data bag. 
 
 User management example
 =======================
