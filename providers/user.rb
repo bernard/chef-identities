@@ -16,6 +16,13 @@ else
     end
 
     # Create/manage user
+    if u['home_dir']
+      h = u['home_dir']
+    else
+      # Set sensible default
+      h = "/home/#{u['id']}"
+    end
+
     user new_resource.name do
       begin
         Etc.getpwnam(new_resource.name)
@@ -28,17 +35,17 @@ else
       uid u['uid'] if u['uid']
       gid u['gid'] if u['gid']
       password u['password'] if u['password']
-      home u['home_dir'] if u['home_dir']
+      home h
     end
 
     # Manage SSH authorized keys
     if u['authorized_keys']
-      directory "#{u['home_dir']}/.ssh" do
+      directory "#{h}/.ssh" do
         owner u['id']
         mode 0700
       end
 
-      template "#{u['home_dir']}/.ssh/authorized_keys" do
+      template "#{h}/.ssh/authorized_keys" do
         cookbook 'identities'
         source 'authorized_keys.erb'
         owner u['id']
