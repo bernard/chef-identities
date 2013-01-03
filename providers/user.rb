@@ -8,7 +8,16 @@ if Chef::Config[:solo]
 else
   action :manage do
     # Get user profile
+<<<<<<< HEAD
+    if new_resource.encrypted_databag == false
+      u = data_bag_item(new_resource.data_bag, new_resource.name)
+    else
+      s = Chef::EncryptedDataBagItem.load_secret(new_resource.secret_file)
+      u = Chef::EncryptedDataBagItem.load(new_resource.data_bag, new_resource.name, s)
+    end
+=======
     u = data_bag_item(new_resource.data_bag, new_resource.name)
+>>>>>>> e9e095aa1b9755e34948bc48cdf87529bebc74e0
 
     # Create/manage user
     user new_resource.name do
@@ -61,7 +70,17 @@ else
   end
 
   action :cleanup do
+<<<<<<< HEAD
+    # Get user profile
+    if new_resource.encrypted_databag == false
+      u = data_bag_item(new_resource.data_bag, new_resource.name)
+    else
+      s = Chef::EncryptedDataBagItem.load_secret(new_resource.secret_file)
+      u = Chef::EncryptedDataBagItem.load(new_resource.data_bag, new_resource.name, s)
+    end
+=======
     u = data_bag_item(new_resource.data_bag, new_resource.name)
+>>>>>>> e9e095aa1b9755e34948bc48cdf87529bebc74e0
     directory "#{u['home_dir']}" do
       action :delete
       recursive true
