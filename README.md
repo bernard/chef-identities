@@ -39,6 +39,14 @@ User management example
 
 In the above example, the values will be taken from the 'foo' data bag instead of the 'users' default.
 
+Actions:
+
+* :manage => create/manage user
+* :remove => delete user (leaves home directory)
+* :lock => lock user
+* :unlock => unlock user
+* :cleanup => remove home directory
+
 Group management
 ================
 
@@ -49,3 +57,8 @@ Group management
 	end
 
 In the above example, the members of the group are specified. But the group provider will also search the specified data bag for the 'groups' key to append those members as well.
+
+Actions:
+
+* :manage => create/manage
+* :remove => delete group
