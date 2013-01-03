@@ -61,5 +61,10 @@ else
   end
 
   action :cleanup do
+    u = data_bag_item(new_resource.data_bag, new_resource.name)
+    directory "#{u['home_dir']}" do
+      action :delete
+      recursive true
+    end
   end
 end
