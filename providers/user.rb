@@ -37,15 +37,12 @@ else
       home h
     end
 
-<<<<<<< HEAD
     # Manage the user's home in case it was not created already
     directory "#{h}" do
       owner u['id']
       mode 0700
     end
 
-=======
->>>>>>> 2ca9a27ffe9de4e89a5d11571021360460f32266
     # Manage SSH authorized keys
     if v['authorized_keys']
       directory "#{h}/.ssh" do
