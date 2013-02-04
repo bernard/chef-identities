@@ -11,10 +11,14 @@ end
 
 case node[:platform_family]
   when 'rhel', 'suse'
-    package 'ruby-devel' do
+    [ 'make', 'gcc', 'ruby-devel' ].each do |pkg|
+      package pkg do
+      end
     end
   when 'debian'
-    package 'ruby-dev' do
+    [ 'make', 'gcc', 'ruby-dev' ].each do |pkg|
+      package pkg do
+      end
     end
 end
 
