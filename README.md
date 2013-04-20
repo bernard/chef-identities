@@ -3,6 +3,16 @@ Description
 
 Cookbook that creates LWRPs to manage users/groups. Inspired by the Opscode 'users' cookbook. But more complete.
 
+Warning
+=======
+
+Apprently, some people are confused by the fact that the repository is named chef-identities and that you should rename the cookbook
+to identities.
+
+It's kind of a defacto standard on Github for people to name their cookbooks chef-foo.
+
+In any case, now you know : )
+
 Requirements
 ============
 
