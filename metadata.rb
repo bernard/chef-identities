@@ -1,3 +1,4 @@
+name						 "identities"
 maintainer       "THX Systems"
 maintainer_email "failshell@gmail.com"
 license          "GPLv2"
