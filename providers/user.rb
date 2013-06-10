@@ -41,6 +41,12 @@ action :manage do
       mode 0700
     end
 
+    # Manage the user's home in case it was not created already
+    directory "#{h}" do
+      owner u['id']
+      mode 0700
+    end
+
     template "#{h}/.ssh/authorized_keys" do
       cookbook 'identities'
       source 'authorized_keys.erb'
