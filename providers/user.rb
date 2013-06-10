@@ -19,6 +19,12 @@ action :manage do
     h = "/home/#{u['id']}"
   end
 
+  # Adding this because SLES doesnt manage the home properly ...
+  directory h do
+    user new_resource.name
+    mode 0700
+  end
+
   user new_resource.name do
     begin
       Etc.getpwnam(new_resource.name)
@@ -26,6 +32,7 @@ action :manage do
     rescue ArgumentError
       action :create
     end
+
     # Options based on the data bag item
     comment u['comment'] if u['comment']
     uid u['uid'] if u['uid']
