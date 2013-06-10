@@ -38,6 +38,7 @@ action :manage do
     uid u['uid'] if u['uid']
     gid u['gid'] if u['gid']
     password v['password'] if v['password']
+    shell u['shell'] if u['shell']
     home h
   end
 
