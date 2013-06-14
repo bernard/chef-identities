@@ -22,7 +22,7 @@ action :manage do
   # Adding this because SLES doesnt manage the home properly ...
   directory h do
     user new_resource.name
-    mode 0700
+    mode 0755
   end
 
   user new_resource.name do
