@@ -23,6 +23,7 @@ action :manage do
     h = "/home/#{u['id']}"
   end
 
+  # Required for SLES ...
   directory h do
     user new_resource.name
     mode new_resource.home_dir_perms
@@ -46,6 +47,11 @@ action :manage do
   end
 
   # Manage the user's home in case it was not created already
+  directory h do
+    user new_resource.name
+    mode new_resource.home_dir_perms
+  end
+
   directory "#{h}/.ssh" do
     owner u['id']
     mode 0700
