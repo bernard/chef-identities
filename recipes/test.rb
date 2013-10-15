@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: identities
-# Recipe:: default
+# Recipe:: test
 #
 # Copyright (C) 2013 Jean-Francois Theroux
 #
@@ -16,5 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-chef_gem 'ruby-shadow' do
+identities_user 'test' do
+  home_dir_perms 0755
 end

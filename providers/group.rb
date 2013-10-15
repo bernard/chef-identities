@@ -22,10 +22,14 @@ action :manage do
     append new_resource.append if new_resource.append
     system new_resource.system if new_resource.system
   end
+
+  new_resource.updated_by_last_action(true)
 end
 
 action :remove do
   group new_resource.name do
     action :remove
   end
+
+  new_resource.updated_by_last_action(true)
 end
