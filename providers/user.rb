@@ -14,7 +14,9 @@ action :manage do
   end
 
   # Create/manage user
-  if u['id'] == 'root'
+  if node['users'][new_resource.name]['home_dir']
+    h = node['users'][new_resource.name]['home_dir']
+  elsif u['id'] == 'root'
     h = '/root'
   elsif u['home_dir']
     h = u['home_dir']
