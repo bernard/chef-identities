@@ -11,6 +11,11 @@ Vagrant.configure("2") do |config|
     chef.environment = 'vagrant'
     chef.data_bags_path = 'data_bags'
     chef.json = {
+      "users" => {
+        "test" => {
+          "home_dir" => "/tmp/test"
+        }
+      }
     }
 
     chef.run_list = [

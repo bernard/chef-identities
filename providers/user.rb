@@ -14,18 +14,17 @@ action :manage do
   end
 
   # Create/manage user
-  if node['users'][new_resource.name]['home_dir']
-    h = node['users'][new_resource.name]['home_dir']
-  elsif u['id'] == 'root'
+  if u['id'] == 'root'
     h = '/root'
+  elsif node['users'] and node['users'][new_resource.name] and node['users'][new_resource.name]['home_dir']
+    h = node['users'][new_resource.name]['home_dir']
   elsif u['home_dir']
     h = u['home_dir']
   else
     # Set sensible default
     h = "/home/#{u['id']}"
-  end
+  end rescue NoMethodError
 
-  # Required for SLES ...
   directory h do
     user new_resource.name
     mode new_resource.home_dir_perms
@@ -49,11 +48,6 @@ action :manage do
   end
 
   # Manage the user's home in case it was not created already
-  directory h do
-    user new_resource.name
-    mode new_resource.home_dir_perms
-  end
-
   directory "#{h}/.ssh" do
     owner u['id']
     mode 0700

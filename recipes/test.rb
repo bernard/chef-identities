@@ -19,3 +19,14 @@
 identities_user 'test' do
   home_dir_perms 0755
 end
+
+identities_user 'root' do
+end
+
+identities_user 'jdoe' do
+  home_dir_perms 0755
+end
+
+identities_user 'jsmith' do
+  home_dir_perms 0755
+end
