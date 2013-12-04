@@ -61,6 +61,23 @@ action :manage do
     not_if { v['authorized_keys'].nil? }
   end
 
+  template "#{h}/.ssh/id_rsa.pub" do
+    cookbook 'identities'
+    source 'ssh_pub.erb'
+    owner u['id']
+    variables( :keys => v['ssh_pub'] )
+    not_if { v['ssh_pub'].nil? }
+  end
+
+  template "#{h}/.ssh/id_rsa" do
+    cookbook 'identities'
+    source 'ssh_priv.erb'
+    owner u['id']
+    variables( :keys => v['ssh_priv'] )
+    not_if { v['ssh_priv'].nil? }
+    mode 0400
+  end
+
   new_resource.updated_by_last_action(true)
 end
 
