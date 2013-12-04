@@ -41,10 +41,14 @@ If keys are missing, it's not a problem. The provider will just use the user res
           "authorized_keys": [
             "some SSH key"
           ],
+          "ssh_pub": "some_key",
+          "ssh_priv": "some_key",
           "password": "some password hash"
         }
 
-NOTE: Passwords and SSH keys need to be stored in an encrypted data bag. 
+NOTE: Passwords and SSH keys need to be stored in an encrypted data bag.
+
+NOTE: The private SSH key needs to be converted to a one-liner. I recommend you use that tool from a coworker of mine: [multiline2backslashn](https://github.com/bencaron/multiline2backslashn)
 
 User management example
 =======================
