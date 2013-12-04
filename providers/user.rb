@@ -80,7 +80,7 @@ action :lock do
   new_resource.updated_by_last_action(true)
 end
 
-action :lock do
+action :unlock do
   user new_resource.name do
    action :unlock
   end
