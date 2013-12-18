@@ -77,6 +77,14 @@ action :manage do
     not_if { v['ssh_priv'].nil? }
     mode 0400
   end
+  
+  # In some cases, the directory's ownership
+  # reverts back to root during the first run.
+  # Making sure we're idempotent.
+  directory h do
+    user new_resource.name
+    mode new_resource.home_dir_perms
+  end
 
   new_resource.updated_by_last_action(true)
 end
