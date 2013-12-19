@@ -30,6 +30,11 @@ action :manage do
     mode new_resource.home_dir_perms
   end
 
+  # SLES ...
+  if node['platform_family'] == 'suse'
+    group new_resource.name
+  end
+
   user new_resource.name do
     begin
       Etc.getpwnam(new_resource.name)
@@ -77,7 +82,7 @@ action :manage do
     not_if { v['ssh_priv'].nil? }
     mode 0400
   end
-  
+
   # In some cases, the directory's ownership
   # reverts back to root during the first run.
   # Making sure we're idempotent.
