@@ -25,11 +25,6 @@ action :manage do
     h = "/home/#{u['id']}"
   end rescue NoMethodError
 
-  directory h do
-    user new_resource.name
-    mode new_resource.home_dir_perms
-  end
-
   # SLES ...
   if node['platform_family'] == 'suse'
     group new_resource.name
@@ -50,6 +45,15 @@ action :manage do
     password v['password'] if v['password']
     shell u['shell'] if u['shell']
     home h
+  end
+
+  # In some cases, the directory's ownership
+  # reverts back to root during the first run.
+  # Making sure we're idempotent.
+  directory h do
+    user new_resource.name
+    group 'root'
+    mode new_resource.home_dir_perms
   end
 
   # Manage the user's home in case it was not created already
@@ -81,14 +85,6 @@ action :manage do
     variables( :keys => v['ssh_priv'] )
     not_if { v['ssh_priv'].nil? }
     mode 0400
-  end
-
-  # In some cases, the directory's ownership
-  # reverts back to root during the first run.
-  # Making sure we're idempotent.
-  directory h do
-    user new_resource.name
-    mode new_resource.home_dir_perms
   end
 
   new_resource.updated_by_last_action(true)
