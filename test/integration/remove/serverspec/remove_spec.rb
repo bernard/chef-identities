@@ -7,3 +7,9 @@ describe 'user' do
     end
   end
 end
+
+describe 'group' do
+  describe group('testers') do
+    it { should_not exist }
+  end
+end

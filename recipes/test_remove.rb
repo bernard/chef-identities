@@ -21,3 +21,7 @@
     action :remove
   end
 end
+
+identities_group 'testers' do
+  action :remove
+end
