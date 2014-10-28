@@ -16,5 +16,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-chef_gem 'ruby-shadow' do
-end
+# chef_gem 'ruby-shadow' do
+# end
