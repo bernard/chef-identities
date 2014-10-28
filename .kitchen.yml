@@ -13,4 +13,7 @@ suites:
   - name: manage
     run_list:
       - recipe[identities::test_manage]
-    attributes:
+  - name: remove
+    run_list:
+      - recipe[identities::test_manage]
+      - recipe[identities::test_remove]
