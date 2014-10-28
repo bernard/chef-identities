@@ -23,3 +23,9 @@ suites:
     run_list:
       - recipe[identities::test_manage]
       - recipe[identities::test_lock]
+
+  - name: unlock
+    run_list:
+      - recipe[identities::test_manage]
+      - recipe[identities::test_lock]
+      - recipe[identities::test_unlock]
