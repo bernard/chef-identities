@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: identities
-# Recipe:: test
+# Recipe:: test_lock
 #
-# Copyright (C) 2013 Jean-Francois Theroux
+# Copyright (C) 2014 Jean-Francois Theroux
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,17 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-identities_user 'test' do
-  home_dir_perms 0755
-end
-
-identities_user 'root' do
-end
-
-identities_user 'jdoe' do
-  home_dir_perms 0755
-end
-
-identities_user 'jsmith' do
-  home_dir_perms 0755
+%w(test jdoe jsmith).each do |user|
+  identities_user user do
+    action :lock
+  end
 end

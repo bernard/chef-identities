@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: identities
-# Recipe:: default
+# Recipe:: test_manage
 #
 # Copyright (C) 2013 Jean-Francois Theroux
 #
@@ -16,5 +16,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# chef_gem 'ruby-shadow' do
-# end
+%w(test root jdoe).each { |user| identities_user user }
+
+identities_user 'jsmith' do
+  encrypted_databag true
+  home_dir_perms 0755
+end
+
+identities_group 'operators' do
+  gid 20000
+end
+
+group 'testers' do
+  members ['root']
+end
+
+user 'joebob'
+
+identities_group 'testers' do
+  append true
+  members ['joebob']
+end

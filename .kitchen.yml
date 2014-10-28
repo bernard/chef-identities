@@ -1,0 +1,41 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-12.04
+  - name: centos-6.6
+
+suites:
+  - name: manage
+    run_list:
+      - recipe[chef-solo-search]
+      - recipe[identities::test_manage]
+
+  - name: remove
+    run_list:
+      - recipe[chef-solo-search]
+      - recipe[identities::test_manage]
+      - recipe[identities::test_remove]
+
+  - name: lock
+    run_list:
+      - recipe[chef-solo-search]
+      - recipe[identities::test_manage]
+      - recipe[identities::test_lock]
+
+  - name: unlock
+    run_list:
+      - recipe[chef-solo-search]
+      - recipe[identities::test_manage]
+      - recipe[identities::test_lock]
+      - recipe[identities::test_unlock]
+
+  - name: cleanup
+    run_list:
+      - recipe[chef-solo-search]
+      - recipe[identities::test_manage]
+      - recipe[identities::test_cleanup]

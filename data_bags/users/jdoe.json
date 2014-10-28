@@ -5,6 +5,10 @@
   "data_bag": "users",
   "raw_data": {
     "id": "jdoe",
-    "home_dir": "/var/tmp"
+    "home_dir": "/var/tmp",
+    "groups": [
+      "operators",
+      "testers"
+    ]
   }
 }

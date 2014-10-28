@@ -4,6 +4,13 @@
   "chef_type": "data_bag_item",
   "data_bag": "users",
   "raw_data": {
-    "id": "jsmith"
+    "id": "jsmith",
+    "shell": "/sbin/nologin",
+    "uid": 10000,
+    "gid": 0,
+    "groups": [
+      "operators",
+      "testers"
+    ]
   }
 }

@@ -1,10 +1,15 @@
 {
-  "name": "data_bag_item_users_jsmith",
+  "name": "data_bag_item_users_vault_jsmith",
   "json_class": "Chef::DataBagItem",
   "chef_type": "data_bag_item",
-  "data_bag": "users",
+  "data_bag": "users_vault",
   "raw_data": {
     "id": "jsmith",
-    "password": "$1$1vHcYqnR$gY5ARDVBAOUBmNJCChwMW0"
+    "password": {
+      "encrypted_data": "CyZG/FV9gYCnnxj0uT5AiXMphklI94BRi8sb0mQjlcvPyLfWuvGqj6x3YtEc\n04Psxc9K/oxv6YAdD9eeuyzRfw==\n",
+      "iv": "gOSBL0Ta6ic44VAK4S4Exg==\n",
+      "version": 1,
+      "cipher": "aes-256-cbc"
+    }
   }
 }
