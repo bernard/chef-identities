@@ -7,6 +7,9 @@
     "id": "jsmith",
     "shell": "/sbin/nologin",
     "uid": 10000,
-    "gid": 0
+    "gid": 0,
+    "groups": [
+      "operators"
+    ]
   }
 }
