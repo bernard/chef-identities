@@ -17,3 +17,7 @@ Style/SignalException:
 # Needed for metadata.rb
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
+
+# UTF8
+Style/Encoding:
+  Enabled: false

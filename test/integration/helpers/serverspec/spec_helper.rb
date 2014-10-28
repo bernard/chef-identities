@@ -34,7 +34,7 @@ shared_examples_for 'core' do
       'jsmith' => '/home/jsmith'
     }
 
-    users.each do |user, home|
+    users.each do |user, home| # rubocop:disable Style/Next
       describe user(user) do
         it { should exist }
         it { should have_home_directory home }

@@ -16,7 +16,7 @@ action :manage do
 
   if u['id'] == 'root'
     h = '/root'
-  elsif node['users'] and node['users'][new_resource.name] and node['users'][new_resource.name]['home_dir']
+  elsif node['users'] && node['users'][new_resource.name] && node['users'][new_resource.name]['home_dir']
     h = node['users'][new_resource.name]['home_dir']
   elsif u['home_dir']
     h = u['home_dir']
@@ -96,7 +96,7 @@ action :cleanup do
 
   if u['id'] == 'root'
     h = '/root'
-  elsif node['users'] and node['users'][new_resource.name] and node['users'][new_resource.name]['home_dir']
+  elsif node['users'] && node['users'][new_resource.name] && node['users'][new_resource.name]['home_dir']
     h = node['users'][new_resource.name]['home_dir']
   elsif u['home_dir']
     h = u['home_dir']
