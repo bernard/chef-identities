@@ -5,6 +5,8 @@
   "data_bag": "users",
   "raw_data": {
     "id": "jsmith",
-    "shell": "/sbin/nologin"
+    "shell": "/sbin/nologin",
+    "uid": 10000,
+    "gid": 0
   }
 }

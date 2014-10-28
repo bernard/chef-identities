@@ -14,7 +14,10 @@ shared_examples_for 'core' do
     users.each do |user, home|
       describe user(user) do
         it { should exist }
+        it { should have_home_directory home }
         it { should have_login_shell '/sbin/nologin' } if user == 'jsmith'
+        it { should have_uid 10000 } if user == 'jsmith'
+        it { should belong_to_group 'root' } if user == 'jsmith'
       end
 
       describe file(home) do
