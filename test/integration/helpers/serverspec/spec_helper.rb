@@ -12,44 +12,37 @@ shared_examples_for 'core' do
     }
 
     users.each do |user, home|
-      it "Has a user named '#{user}'" do
-        expect(user user).to exist
-        if user == 'jsmith'
-          expect(user user).to have_login_shell '/sbin/nologin'
-        end
+      describe user(user) do
+        it { should exist }
+        it { should have_login_shell '/sbin/nologin' } if user == 'jsmith'
       end
 
-      it "User '#{user}' has home directory '#{home}'" do
-        expect(file home).to be_directory
+      describe file(home) do
+        it { should be_directory }
         if user == 'jsmith'
-          expect(file home).to be_mode 755
+          it { should be_mode 755 }
         else
-          expect(file home).to be_mode 700
+          it { should be_mode 700 }
         end
       end
 
-      it "Has a SSH directory '#{home}/.ssh'" do
-        expect(file "#{home}/.ssh").to be_directory
-        expect(file "#{home}/.ssh").to be_mode 700
+      describe file("#{home}/.ssh") do
+        it { should be_directory }
+        it { should be_mode 700 }
       end
 
       if user == 'root'
-        it "Has an authorized_keys file '#{home}/.ssh/authorized_keys'" do
-          expect(file "#{home}/.ssh/authorized_keys").to be_file
-          expect(file "#{home}/.ssh/authorized_keys").to be_mode 644
-          expect(file "#{home}/.ssh/authorized_keys").to contain 'somesupersecretkey'
-        end
-
-        it "Has an id_rsa.pub file '#{home}/.ssh/id_rsa.pub'" do
-          expect(file "#{home}/.ssh/id_rsa.pub").to be_file
-          expect(file "#{home}/.ssh/id_rsa.pub").to be_mode 644
-          expect(file "#{home}/.ssh/id_rsa.pub").to contain 'sshpubkey'
-        end
-
-        it "Has an id_rsa file '#{home}/.ssh/id_rsa'" do
-          expect(file "#{home}/.ssh/id_rsa").to be_file
-          expect(file "#{home}/.ssh/id_rsa").to be_mode 400
-          expect(file "#{home}/.ssh/id_rsa").to contain 'sshprivkey'
+        files = {
+          "#{home}/.ssh/authorized_keys" => { 'mode' => 644, 'string' => 'somesupersecretkey' },
+          "#{home}/.ssh/id_rsa.pub" => { 'mode' => 644, 'string' => 'sshpubkey' },
+          "#{home}/.ssh/id_rsa" => { 'mode' => 400, 'string' => 'sshprivkey' }
+        }
+        files.each do |file|
+          describe file(file[0]) do
+            it { should be_file }
+            it { should be_mode file[1]['mode'] }
+            it { should contain file[1]['string'] }
+          end
         end
       end
     end
