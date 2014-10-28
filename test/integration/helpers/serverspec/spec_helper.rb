@@ -3,6 +3,29 @@ require 'serverspec'
 set :backend, :exec
 
 shared_examples_for 'core' do
+  describe 'group' do
+    describe group('operators') do
+      it { should exist }
+      it { should have_gid 20000 }
+    end
+
+    %w(jsmith jdoe).each do |user|
+      describe user(user) do
+        it { should belong_to_group 'operators' }
+      end
+    end
+
+    describe group('testers') do
+      it { should exist }
+    end
+
+    %w(root joebob jsmith jdoe).each do |user|
+      describe user(user) do
+        it { should belong_to_group 'testers' }
+      end
+    end
+  end
+
   describe 'user' do
     users = {
       'root' => '/root',

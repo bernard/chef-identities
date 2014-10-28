@@ -12,6 +12,7 @@ platforms:
 suites:
   - name: manage
     run_list:
+      - recipe[chef-solo-search]
       - recipe[identities::test_manage]
 
   - name: remove

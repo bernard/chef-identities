@@ -7,7 +7,8 @@
     "id": "jdoe",
     "home_dir": "/var/tmp",
     "groups": [
-      "operators"
+      "operators",
+      "testers"
     ]
   }
 }

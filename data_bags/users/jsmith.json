@@ -9,7 +9,8 @@
     "uid": 10000,
     "gid": 0,
     "groups": [
-      "operators"
+      "operators",
+      "testers"
     ]
   }
 }

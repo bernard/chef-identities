@@ -21,3 +21,18 @@
 identities_user 'jsmith' do
   home_dir_perms 0755
 end
+
+identities_group 'operators' do
+  gid 20000
+end
+
+group 'testers' do
+  members ['root']
+end
+
+user 'joebob'
+
+identities_group 'testers' do
+  append true
+  members ['joebob']
+end
