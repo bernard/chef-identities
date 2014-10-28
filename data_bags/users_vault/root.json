@@ -5,6 +5,11 @@
   "data_bag": "users",
   "raw_data": {
     "id": "root",
-    "password": "$1$1vHcYqnR$gY5ARDVBAOUBmNJCChwMW0"
+    "password": "$1$1vHcYqnR$gY5ARDVBAOUBmNJCChwMW0",
+    "authorized_keys": [
+      "somesupersecretkey"
+    ],
+    "ssh_pub": "sshpubkey",
+    "ssh_priv": "sshprivkey"
   }
 }
