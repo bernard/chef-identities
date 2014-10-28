@@ -19,6 +19,7 @@
 %w(test root jdoe).each { |user| identities_user user }
 
 identities_user 'jsmith' do
+  encrypted_databag true
   home_dir_perms 0755
 end
 

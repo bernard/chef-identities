@@ -3,7 +3,12 @@ use_inline_resources
 action :manage do
   u = data_bag_item(new_resource.data_bag, new_resource.name)
   if new_resource.encrypted_databag
-    s = Chef::EncryptedDataBagItem.load_secret(new_resource.secret_file)
+    if Chef::Config[:solo]
+      secret = '/tmp/kitchen/encrypted_data_bag_secret'
+    else
+      secret = new_resource.secret_file
+    end
+    s = Chef::EncryptedDataBagItem.load_secret(secret)
     v = Chef::EncryptedDataBagItem.load(new_resource.vault_data_bag, new_resource.name, s)
   else
     v = data_bag_item(new_resource.vault_data_bag, new_resource.name)
