@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: identities
-# Recipe:: test
+# Recipe:: test_manage
 #
 # Copyright (C) 2013 Jean-Francois Theroux
 #
@@ -16,16 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-identities_user 'test' do
-  home_dir_perms 0755
-end
-
-identities_user 'root' do
-end
-
-identities_user 'jdoe' do
-  home_dir_perms 0755
-end
+%w(test root jdoe).each { |user| identities_user user }
 
 identities_user 'jsmith' do
   home_dir_perms 0755
