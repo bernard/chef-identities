@@ -13,7 +13,13 @@ suites:
   - name: manage
     run_list:
       - recipe[identities::test_manage]
+
   - name: remove
     run_list:
       - recipe[identities::test_manage]
       - recipe[identities::test_remove]
+
+  - name: lock
+    run_list:
+      - recipe[identities::test_manage]
+      - recipe[identities::test_lock]
