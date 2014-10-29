@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - 'Thorfile'
+
 # Max line length
 LineLength:
   Max: 160
