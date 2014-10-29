@@ -2,7 +2,7 @@ use_inline_resources
 
 action :manage do
   members_list = []
-  search(new_resource.data_bag, "groups:#{new_resource.name}") do |m|
+  search(new_resource.data_bag, "groups:#{new_resource.name}") do |m| # ~FC003
     members_list << m['id']
   end
 
