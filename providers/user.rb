@@ -36,3 +36,12 @@ action :manage do
     end
   end
 end
+
+action :remove do
+  converge_by("Removing user #{new_resource.name}") do
+    user new_resource.name do # ~FC021
+      action :remove
+      only_if { do_i_exist?(new_resource.name) }
+    end
+  end
+end
