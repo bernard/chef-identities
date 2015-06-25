@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: identities
-# Recipe:: default
+# Recipe:: user_cleanup_test
 #
 # Copyright (C) 2015 Jean-Francois Theroux
 #
@@ -23,3 +23,14 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+
+identities_user 'user'
+
+cron 'foo' do
+  user 'user'
+  command 'echo foo'
+end
+
+identities_user 'user' do
+  action [:remove, :cleanup]
+end

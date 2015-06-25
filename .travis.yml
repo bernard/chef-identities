@@ -1,7 +1,12 @@
 language: ruby
+cache: bundler
 rvm:
-  - 2.0.0
-install: gem install foodcritic rubocop
+  - 2.1.6
+
+before_install:
+  - gem install rubocop
+  - gem install foodcritic
+
 script:
- - foodcritic -f any .
- - rubocop
+  - rubocop
+  - foodcritic -f any .

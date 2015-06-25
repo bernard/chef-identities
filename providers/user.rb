@@ -1,111 +1,77 @@
-use_inline_resources
+def whyrun_supported?
+  true
+end
+
+def do_i_exist?(user)
+  Etc.getpwnam(user)
+  true
+rescue ArgumentError
+  false
+end
 
 action :manage do
-  u = data_bag_item(new_resource.data_bag, new_resource.name)
-  if new_resource.encrypted_databag
-    if Chef::Config[:solo]
-      secret = '/tmp/kitchen/encrypted_data_bag_secret'
+  converge_by("Managing user #{new_resource.name}") do
+    if new_resource.name == 'root'
+      home_dir = '/root'
     else
-      secret = new_resource.secret_file
+      home_dir = new_resource.home_directory.nil? ? "/home/#{new_resource.name}" : new_resource.home_directory
     end
-    s = Chef::EncryptedDataBagItem.load_secret(secret)
-    v = Chef::EncryptedDataBagItem.load(new_resource.vault_data_bag, new_resource.name, s)
-  else
-    v = data_bag_item(new_resource.vault_data_bag, new_resource.name)
-  end
 
-  if u['id'] == 'root'
-    h = '/root'
-  elsif node['users'] && node['users'][new_resource.name] && node['users'][new_resource.name]['home_dir']
-    h = node['users'][new_resource.name]['home_dir']
-  elsif u['home_dir']
-    h = u['home_dir']
-  else
-    h = "/home/#{u['id']}"
-  end
+    user new_resource.name do
+      action [:manage, :modify] if do_i_exist?(new_resource.name)
+      home home_dir
+      unless new_resource.system
+        gid new_resource.gid unless new_resource.gid.nil?
+        uid new_resource.uid unless new_resource.uid.nil?
+      end
+      password new_resource.password unless new_resource.password.nil?
+      shell new_resource.shell
+      system new_resource.system # ~FC048
+    end
 
-  user new_resource.name do
-    comment u['comment'] if u['comment']
-    uid u['uid'] if u['uid']
-    gid u['gid'] if u['gid']
-    password v['password'] if v['password']
-    shell u['shell'] if u['shell']
-    home h
-  end
+    directory home_dir do
+      owner new_resource.name
+      group new_resource.name
+      mode 0700
+    end
 
-  # In some cases, the directory's ownership
-  # reverts back to root during the first run.
-  # Making sure we're idempotent.
-  directory h do
-    user new_resource.name
-    group 'root'
-    mode new_resource.home_dir_perms
-  end
+    unless new_resource.authorized_keys.nil?
+      directory "#{home_dir}/.ssh" do
+        owner new_resource.name
+        group new_resource.name
+        mode 0700
+      end
 
-  directory "#{h}/.ssh" do
-    owner u['id']
-    mode 0700
-  end
-
-  template "#{h}/.ssh/authorized_keys" do
-    cookbook 'identities'
-    source 'authorized_keys.erb'
-    owner u['id']
-    variables(:keys => v['authorized_keys'])
-    not_if { v['authorized_keys'].nil? }
-  end
-
-  template "#{h}/.ssh/id_rsa.pub" do
-    cookbook 'identities'
-    source 'ssh_pub.erb'
-    owner u['id']
-    variables(:keys => v['ssh_pub'])
-    not_if { v['ssh_pub'].nil? }
-  end
-
-  template "#{h}/.ssh/id_rsa" do
-    cookbook 'identities'
-    source 'ssh_priv.erb'
-    owner u['id']
-    variables(:keys => v['ssh_priv'])
-    not_if { v['ssh_priv'].nil? }
-    mode 0400
+      template "#{home_dir}/.ssh/authorized_keys" do
+        owner new_resource.name
+        group new_resource.name
+        variables(:keys => new_resource.authorized_keys)
+        sensitive true
+        mode 0600
+      end
+    end
   end
 end
 
 action :remove do
-  user new_resource.name do
-    action :remove
-  end
-end
-
-action :lock do
-  user new_resource.name do
-    action :lock
-  end
-end
-
-action :unlock do
-  user new_resource.name do
-    action :unlock
+  converge_by("Removing user #{new_resource.name}") do
+    user new_resource.name do # ~FC021
+      action :remove
+      only_if { do_i_exist?(new_resource.name) }
+    end
   end
 end
 
 action :cleanup do
-  u = data_bag_item(new_resource.data_bag, new_resource.name)
+  converge_by("Clean up user #{new_resource.name}") do
+    home = new_resource.home_directory ? new_resource.home_directory : "/home/#{new_resource.name}"
+    directory home do
+      recursive true
+      action :delete
+    end
 
-  if u['id'] == 'root'
-    h = '/root'
-  elsif node['users'] && node['users'][new_resource.name] && node['users'][new_resource.name]['home_dir']
-    h = node['users'][new_resource.name]['home_dir']
-  elsif u['home_dir']
-    h = u['home_dir']
-  else
-    h = "/home/#{u['id']}"
-  end
-
-  directory h do
-    action :delete
-    recursive true
+    file "/var/spool/cron/#{new_resource.name}" do
+      action :delete
+    end
   end
 end

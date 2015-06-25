@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: identities
-# Recipe:: default
+# Recipe:: user_manage_test
 #
 # Copyright (C) 2015 Jean-Francois Theroux
 #
@@ -23,3 +23,53 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+
+# basic user
+identities_user 'user'
+
+# custom home
+identities_user 'user2' do
+  home_directory '/opt/user2'
+end
+
+# make sure root's home is /root
+identities_user 'root'
+
+# system user
+identities_user 'user3' do
+  system true
+end
+
+# uid/gid
+group 'user4' do
+  gid 10000
+end
+
+identities_user 'user4' do
+  uid 10000
+  gid 10000
+end
+
+# login shell
+identities_user 'user5' do
+  shell '/sbin/nologin'
+end
+
+# password
+identities_user 'user6' do
+  password '$1$usao0TkK$jAJeH39oym.Bn37APZh.T/'
+end
+
+# change existing user
+user 'user7' do
+  uid 20000
+end
+
+identities_user 'user7' do
+  uid 30000
+end
+
+# authorized_keys
+identities_user 'user8' do
+  authorized_keys %w(foo bar)
+end

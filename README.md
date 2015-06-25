@@ -1,86 +1,42 @@
-Description
-===========
+# identities-cookbook
 
-Cookbook that creates LWRPs to manage users/groups. Inspired by the Opscode 'users' cookbook. But more complete.
+TODO: Enter the cookbook description here.
 
-Warning
-=======
+## Supported Platforms
 
-Apprently, some people are confused by the fact that the repository is named chef-identities and that you should rename the cookbook
-to identities.
+TODO: List your supported platforms.
 
-It's kind of a defacto standard on Github for people to name their cookbooks chef-foo.
+## Attributes
 
-In any case, now you know : )
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['identities']['bacon']</tt></td>
+    <td>Boolean</td>
+    <td>whether to include bacon</td>
+    <td><tt>true</tt></td>
+  </tr>
+</table>
 
-Requirements
-============
+## Usage
 
-In order for this cookbook to work properly, you need to install the ruby-shadow gem.
+### identities::default
 
-Users data bag example
-======================
+Include `identities` in your node's `run_list`:
 
-	{
-	  "home_dir": "/root",
-	  "shell": "/bin/bash",
-	  "uid": 0,
-	  "groups": [
-	    "root"
-	  ],
-	  "comment": "The all mighty root",
-	  "id": "root"
-	}
+```json
+{
+  "run_list": [
+    "recipe[identities::default]"
+  ]
+}
+```
 
-If keys are missing, it's not a problem. The provider will just use the user resource's defaults.
+## License and Authors
 
-# Users vault data bag example
-==============================
-
-        {
-          "authorized_keys": [
-            "some SSH key"
-          ],
-          "ssh_pub": "some_key",
-          "ssh_priv": "some_key",
-          "password": "some password hash"
-        }
-
-NOTE: Passwords and SSH keys need to be stored in an encrypted data bag.
-
-NOTE: The private SSH key needs to be converted to a one-liner. I recommend you use that tool from a coworker of mine: [multiline2backslashn](https://github.com/bencaron/multiline2backslashn)
-
-User management example
-=======================
-
-	identities_user 'root' do
-	  data_bag 'foo'
-	  encrypted_databag true
-	  secret_file '/etc/chef/example'
-	end
-
-In the above example, the values will be taken from the 'foo' data bag instead of the 'users' default.
-
-Actions:
-
-* :manage => create/manage user
-* :remove => delete user (leaves home directory)
-* :lock => lock user
-* :unlock => unlock user
-* :cleanup => remove home directory
-
-Group management
-================
-
-	identities_group 'root' do
-	  data_bag 'foo'
-	  members [ 'foo', 'bar' ]
-	  gid 0
-	end
-
-In the above example, the members of the group are specified. But the group provider will also search the specified data bag for the 'groups' key to append those members as well.
-
-Actions:
-
-* :manage => create/manage
-* :remove => delete group
+Author:: Jean-Francois Theroux (<me@failshell.io>)

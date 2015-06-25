@@ -1,9 +1,10 @@
-actions :manage, :remove, :lock, :unlock, :cleanup
+actions :cleanup, :manage, :remove
 default_action :manage
 
-attribute :data_bag, :kind_of => String, :default => 'users'
-attribute :encrypted_databag, :default => false
-attribute :home_dir_perms, :kind_of => Integer, :default => 0700
-attribute :secret_file, :default => '/etc/chef/encrypted_data_bag_secret'
-attribute :shell, :kind_of => String
-attribute :vault_data_bag, :kind_of => String, :default => 'users_vault'
+attribute :authorized_keys, :kind_of => Array, :default => nil
+attribute :home_directory, :kind_of => String, :default => nil
+attribute :gid, :kind_of => Integer, :default => nil
+attribute :password, :kind_of => String, :default => nil
+attribute :shell, :kind_of => String, :default => '/bin/bash'
+attribute :system, :kind_of => [TrueClass, FalseClass], :default => false
+attribute :uid, :kind_of => Integer, :default => nil

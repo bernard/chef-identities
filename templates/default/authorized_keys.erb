@@ -1,6 +1,3 @@
-# Keys managed by Chef for <%= node['fqdn'] %>.
-# Local changes will be erased automagically.
-
-<% @keys.each do |k| %>
-<%= k %>
+<% @keys.each do |key| %>
+<%= key %>
 <% end %>
