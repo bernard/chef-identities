@@ -45,3 +45,17 @@ action :remove do
     end
   end
 end
+
+action :cleanup do
+  converge_by("Clean up user #{new_resource.name}") do
+    home = new_resource.home_directory ? new_resource.home_directory : "/home/#{new_resource.name}"
+    directory home do
+      recursive true
+      action :delete
+    end
+
+    file "/var/spool/cron/#{new_resource.name}" do
+      action :delete
+    end
+  end
+end

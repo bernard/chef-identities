@@ -16,3 +16,7 @@ suites:
   - name: remove
     run_list:
       - recipe[identities::user_remove_test]
+
+  - name: cleanup
+    run_list:
+      - recipe[identities::user_cleanup_test]

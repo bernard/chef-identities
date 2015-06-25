@@ -1,4 +1,4 @@
-actions :manage, :remove
+actions :cleanup, :manage, :remove
 default_action :manage
 
 attribute :home_directory, :kind_of => String, :default => nil
