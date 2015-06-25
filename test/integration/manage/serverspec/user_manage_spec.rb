@@ -73,4 +73,21 @@ context 'manage action' do
       it { should have_uid 30000 }
     end
   end
+
+  context 'user: user8' do
+    describe file('/home/user8/.ssh') do
+      it { should be_directory }
+      it { should be_mode 700 }
+    end
+
+    describe file('/home/user8/.ssh/authorized_keys') do
+      it { should be_file }
+      it { should be_mode 600 }
+    end
+
+    describe user('user8') do
+      it { should have_authorized_key 'foo' }
+      it { should have_authorized_key 'bar' }
+    end
+  end
 end

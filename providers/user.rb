@@ -34,6 +34,22 @@ action :manage do
       group new_resource.name
       mode 0700
     end
+
+    unless new_resource.authorized_keys.nil?
+      directory "#{home_dir}/.ssh" do
+        owner new_resource.name
+        group new_resource.name
+        mode 0700
+      end
+
+      template "#{home_dir}/.ssh/authorized_keys" do
+        owner new_resource.name
+        group new_resource.name
+        variables(:keys => new_resource.authorized_keys)
+        sensitive true
+        mode 0600
+      end
+    end
   end
 end
 

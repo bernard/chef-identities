@@ -68,3 +68,8 @@ end
 identities_user 'user7' do
   uid 30000
 end
+
+# authorized_keys
+identities_user 'user8' do
+  authorized_keys %w(foo bar)
+end
