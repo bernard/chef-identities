@@ -1,41 +1,24 @@
-# identities-cookbook
+[![Build Status](https://travis-ci.org/failshell/chef-identities.svg?branch=master)](https://travis-ci.org/failshell/chef-identities)
 
-TODO: Enter the cookbook description here.
+This cookbook wraps most operations related to managing users by exposing a LWRP.
 
-## Supported Platforms
+## identities_user
 
-TODO: List your supported platforms.
+### Available actions
 
-## Attributes
++ cleanup: removes home directory and CRONs
++ manage: creates/modifies user, manages home directory and SSH authorized_keys
++ remove: removes user
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['identities']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+### Available attributes
 
-## Usage
-
-### identities::default
-
-Include `identities` in your node's `run_list`:
-
-```json
-{
-  "run_list": [
-    "recipe[identities::default]"
-  ]
-}
-```
++ authorized_keys: Array of authorized_keys
++ home_directory: user's home directory
++ gid: user group id
++ password: Password hash
++ shell: user shell
++ system: make this a system user (UID/GID below 1000 usually). This disable the uid/gid attributes.
++ uid: user id
 
 ## License and Authors
 
