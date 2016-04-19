@@ -2,6 +2,7 @@ actions :cleanup, :manage, :remove
 default_action :manage
 
 attribute :authorized_keys, :kind_of => Array, :default => nil
+attribute :private_key, :kind_of => String, :default => nil
 attribute :home_directory, :kind_of => String, :default => nil
 attribute :gid, :kind_of => Integer, :default => nil
 attribute :password, :kind_of => String, :default => nil

@@ -50,6 +50,15 @@ action :manage do
         sensitive true
         mode 0600
       end
+
+      template "#{home_dir}/.ssh/id_rsa" do
+        cookbook 'identities'
+        owner new_resource.name
+        group new_resource.name
+        variables(:private_key => new_resource.private_key)
+        sensitive true
+        mode 0600
+      end
     end
   end
 end

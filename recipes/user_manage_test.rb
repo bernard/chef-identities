@@ -73,3 +73,8 @@ end
 identities_user 'user8' do
   authorized_keys %w(foo bar)
 end
+
+# private_key
+identities_user 'user9' do
+  private_key 'foo key'
+end
