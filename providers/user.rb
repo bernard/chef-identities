@@ -50,6 +50,14 @@ action :manage do
         sensitive true
         mode 0600
       end
+    end
+
+    unless new_resource.private_key.nil?
+      directory "#{home_dir}/.ssh" do
+        owner new_resource.name
+        group new_resource.name
+        mode 0700
+      end
 
       template "#{home_dir}/.ssh/id_rsa" do
         cookbook 'identities'
